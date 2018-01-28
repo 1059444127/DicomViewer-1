@@ -42,10 +42,7 @@ namespace CSCustomDisplay
             ePatientBirthName,
             ePatientAge,
             ePatientComments,
-
-            // <<== 여기 까지는 모든 파일에서 공통으로 읽어들임
-            //////////////////////////////////////////////////////////////////////////
-
+            
             // 0x0018
             eContrastBolusAgent,
             eBodyPartExamined,

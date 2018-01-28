@@ -364,17 +364,18 @@ namespace CSCustomDisplay
 
             if (m_dcmImage != null)
             {
-                SolidBrush brBlack = new SolidBrush(Color.Black);
-                g.FillRectangle(brBlack, ClientRectangle);
+                // Fill Background
+                g.FillRectangle(BrushBlack, ClientRectangle);
 
                 using (var bmpImage = m_dcmImage.RenderImage().As<Bitmap>())
                 {
                     Rectangle rcDraw = GetFitRect(ClientSize, bmpImage.Size);
 
                     bmpImage.RotateFlip(m_eCurRF);
-
+                    
                     if (m_bCapture)
                     {
+                        // Quickly draw with mouse click
                         g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighSpeed;
                         g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Low;
                         g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighSpeed;
@@ -391,7 +392,7 @@ namespace CSCustomDisplay
                     g.DrawImage(bmpImage, rcDraw);
                 }
             }
-
+            
             if(m_dcmFile != null)
             {
                 float fGap = 1.0f;
@@ -423,6 +424,7 @@ namespace CSCustomDisplay
                     drawPos.Y += fGap + msSize.Height;
                     DrawShadowString(g, tagValue, drawPos, font);
 
+                    // Draw Window Width/Center
                     if (m_dcmImage != null)
                         tagValue = string.Format("W:{0} C:{1}", m_dcmImage.WindowWidth, m_dcmImage.WindowCenter);
                     else
@@ -432,6 +434,7 @@ namespace CSCustomDisplay
                     drawPos.Y = ClientSize.Height - msSize.Height - fGap;
                     DrawShadowString(g, tagValue, drawPos, font);
 
+                    // Draw Image Size
                     if (m_dcmImage != null)
                         tagValue = string.Format("{0} X {1}", m_dcmImage.Width, m_dcmImage.Height);
                     else
@@ -441,6 +444,7 @@ namespace CSCustomDisplay
                     drawPos.Y -= (fGap + msSize.Height);
                     DrawShadowString(g, tagValue, drawPos, font);
 
+                    // Draw RotateFlip Value
                     var erf = (eRFText)m_eCurRF;
                     tagValue = erf.ToString();
                     msSize = g.MeasureString(tagValue, font);
